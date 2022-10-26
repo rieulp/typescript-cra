@@ -1,40 +1,94 @@
-# TypeScript Create React App
+# TypeScript CRA with husky
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 설치
 
-## Available Scripts
+```shell
+npm install
+```
 
-In the project directory, you can run:
+## 실행
 
-### `npm start`
+```shell
+npm start
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## husky script
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- ### pre-commit
+  commit 전에 prettier 적용
+- ### pre-push
+  git push전에 eslint 검사
 
-### `npm test`
+## prettier 설정
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```json
+// .prettierrc
+{
+  "trailingComma": "none",
+  "tabWidth": 2,
+  "semi": true,
+  "singleQuote": false,
+  "arrowParens": "always",
+  "printWidth": 80
+}
+```
 
-### `npm run build`
+## eslint 설정
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```json
+// .eslintrc.json
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "overrides": [],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "@typescript-eslint"],
+  "rules": {
+    "no-var": "error",
+    "no-multiple-empty-lines": "error",
+    "no-console": ["error", { "allow": ["warn", "error", "info"] }],
+    "eqeqeq": "error",
+    "dot-notation": "warn",
+    "no-unused-vars": "error",
+    "quotes": ["error", "double"]
+  }
+}
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 절대경로 설정
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### tsconfig.json
 
-### `npm run eject`
+```json
+"baseUrl": ".",
+"paths": {
+    "@/*": ["src/*"]
+}
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### config-overrides.js
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```js
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { addWebpackAlias, override } = require("customize-cra");
+const path = require("path");
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+module.exports = override(
+  addWebpackAlias({
+    "@": path.resolve(__dirname, "src")
+  })
+);
+```
