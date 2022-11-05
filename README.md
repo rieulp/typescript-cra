@@ -12,6 +12,22 @@ npm install
 npm start
 ```
 
+## 빌드
+
+- **SourceMap** 생성 `false`로 설정됨
+
+### Windows
+
+```shell
+npm run winbuild
+```
+
+### 그외 OS
+
+```shell
+npm run build
+```
+
 ## husky script
 
 - ### pre-commit
@@ -46,6 +62,7 @@ npm start
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
+    "plugin:react-hook/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended"
   ],
@@ -57,13 +74,22 @@ npm start
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "react/react-in-jsx-scope": "off",
     "no-var": "error",
     "no-multiple-empty-lines": "error",
     "no-console": ["error", { "allow": ["warn", "error", "info"] }],
     "eqeqeq": "error",
     "dot-notation": "warn",
     "no-unused-vars": "error",
-    "quotes": ["error", "double"]
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
   }
 }
 ```
