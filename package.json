@@ -1,5 +1,5 @@
 {
-  "name": "tcra",
+  "name": "typescript-cra",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -18,7 +18,8 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "build": "GENERATE_SOURCEMAP=false react-app-rewired build",
+    "winbuild": "set \"GENERATE_SOURCEMAP=false\" && react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "postinstall": "husky install",
