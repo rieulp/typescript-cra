@@ -62,7 +62,7 @@ npm run build
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:react-hook/recommended",
+    "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended"
   ],
